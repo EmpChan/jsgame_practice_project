@@ -1,0 +1,42 @@
+@font-face {
+    font-family: 'OnePickFont';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2410-1@1.0/YOnepickTTF-Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
+
+body{
+    margin:0px;
+    font-family: 'OnePickFont';
+    background-color:aquamarine;
+}
+div.title{
+    font-size:64px;
+    text-align:center;
+    font-style:italic;
+}
+
+.side_logo{
+    display: inline-block;
+}
+
+.mainbox{
+    text-align:center;
+}
+
+.left{
+    float:left;
+}
+
+.right{
+    float:right;
+}
+
+.game{
+    margin: auto;
+    position:absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}

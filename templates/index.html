@@ -1,9 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>남박사</title>
+    <title>우람이의 기묘한 여행</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
 </head>
 <body>
-    <p>실습용 사이트입니다.</p>
+    <div class = "title">
+        <a style="color:red">우</a>
+        <a style="color:orange">람</a>
+        <a style="color:yellow">이</a>
+        <a style="color:green">의</a>
+        <a style="color:blue">기묘한</a>
+        <a style="color:violet">여행</a>
+    </div>
+    {% block content %}
+    {% endblock %}
 </body>
 </html>
