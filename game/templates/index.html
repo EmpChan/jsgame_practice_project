@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake Game</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: white;
+        }
+        canvas {
+            background-color: greenyellow;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="gameCanvas" width="400" height="400"></canvas>
+
+    <script>
+        const canvas = document.getElementById("gameCanvas");
+        const ctx = canvas.getContext("2d");
+        
+        // 초기 뱀의 위치 설정
+        let snake = [{ x: 200, y: 200 }, { x:180, y:200 }];
+        let direction = "RIGHT";
+    
+        // 초기 음식 위치 설정
+        let food = {
+                    x: Math.floor(Math.random() * 20) * 20,
+                    y: Math.floor(Math.random() * 20) * 20
+                };
+        let score = 0;
+
+        // 화면에 뱀과 음식을 그리는 함수
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // 음식 그리기
+            ctx.fillStyle = "red";
+            ctx.fillRect(food.x, food.y, 20, 20);
+            
+            // 뱀 그리기
+            ctx.fillStyle = "green";
+            snake.forEach(segment => ctx.fillRect(segment.x, segment.y, 20, 20));
+        }
+        
+        // 키 입력을 감지하여 방향 변경
+        document.addEventListener("keydown", changeDirection);
+        function changeDirection(event) {
+            const key = event.key;
+            if (key === "ArrowUp" && direction !== "DOWN") direction = "UP";
+            if (key === "ArrowDown" && direction !== "UP") direction = "DOWN";
+            if (key === "ArrowLeft" && direction !== "RIGHT") direction = "LEFT";
+            if (key === "ArrowRight" && direction !== "LEFT") direction = "RIGHT";
+        }
+        
+        // 게임 상태 업데이트 함수
+        function update() {
+            let head = { ...snake[0] };
+
+            // 현재 방향에 따라 뱀의 머리를 이동
+            if (direction === "UP") head.y -= 20;
+            if (direction === "DOWN") head.y += 20;
+            if (direction === "LEFT") head.x -= 20;
+            if (direction === "RIGHT") head.x += 20;
+            // 머리를 새로운 위치에 추가
+            snake.unshift(head);
+
+            // 음식과 충돌하면 점수 증가 및 새로운 음식 생성
+            if (head.x === food.x && head.y === food.y) {
+                score++;
+                food = {
+                    x: Math.floor(Math.random() * 20) * 20,
+                    y: Math.floor(Math.random() * 20) * 20
+                };
+            } else {
+                // 음식과 충돌하지 않으면 꼬리를 제거하여 길이 유지
+                snake.pop();
+            }
+            
+            // 벽이나 자기 몸과 충돌하면 게임 종료
+            if (head.x < 0 || head.x >= canvas.width || head.y < 0 || head.y >= canvas.height || snakeCollision(head)) {
+                clearInterval(game);
+                alert("Game Over! Your score: " + score);
+            }
+        }
+        
+        // 뱀이 자기 자신과 충돌했는지 확인하는 함수
+        function snakeCollision(head) {
+            return snake.slice(1).some(segment => segment.x === head.x && segment.y === head.y);
+        }
+
+        // 게임 루프 함수: 업데이트 후 화면 다시 그리기
+        function gameLoop() {
+            update();
+            draw();
+        }
+        
+        // 일정 간격으로 게임 루프 실행
+        let game = setInterval(gameLoop, 100);
+    </script>
+</body>
+</html>     
+            

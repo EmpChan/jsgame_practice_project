@@ -4,5 +4,6 @@ from game import views as gameView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', gameView.main),
+    path('snake_game', gameView.index),
 ]
+
